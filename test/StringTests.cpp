@@ -7,7 +7,6 @@
 namespace custom_string {
 
 
-// ConstructorTests begin
 TEST(ConstructorTests, EmptyString) {
   String s;
   EXPECT_TRUE(strcmp(s.data, "") == 0);
@@ -32,7 +31,36 @@ TEST(ConstructorTests, FromString) {
   EXPECT_EQ(s1.get_size(), s2.get_size());
   EXPECT_TRUE(memcmp(s1.data, s2.data, s1.get_size()) == 0);
 }
-// ConstructorTests end
+
+
+  TEST(CompareOperatorTests, Equality) {
+    EXPECT_TRUE(String("123") == String("123"));
+    EXPECT_FALSE(String("123") != String("123"));
+
+    EXPECT_TRUE(String("") == String(""));
+    EXPECT_FALSE(String("") != String(""));
+
+    EXPECT_TRUE(String("123") != String(""));
+    EXPECT_FALSE(String("123") == String(""));
+  }
+
+  TEST(CompareOperatorTests, Compare) {
+    EXPECT_TRUE(String("1") < String("12"));
+    EXPECT_TRUE(String("12") < String("2"));
+
+    EXPECT_FALSE(String("1") > String("12"));
+    EXPECT_FALSE(String("12") > String("2"));
+
+
+    EXPECT_TRUE(String("1") <= String("12"));
+    EXPECT_TRUE(String("12") <= String("2"));
+    
+    EXPECT_FALSE(String("1") >= String("12"));
+    EXPECT_FALSE(String("12") >= String("2"));
+
+    EXPECT_TRUE(String("") <= String(""));
+    EXPECT_TRUE(String("12") <= String("2"));
+  }
 
 }
 

@@ -13,8 +13,15 @@ public:
     String(const String& str);
     ~String();
 
-    size_t get_capacity();
-    size_t get_size();
+    size_t get_capacity() const;
+    size_t get_size() const;
+
+    friend bool operator==(const String s1, const String s2);
+    friend bool operator!=(const String s1, const String s2);
+    friend bool operator<(const String s1, const String s2);
+    friend bool operator>(const String s1, const String s2);
+    friend bool operator<=(const String s1, const String s2);
+    friend bool operator>=(const String s1, const String s2);
 private:
     static size_t get_new_capacity(size_t size);
     size_t capacity;

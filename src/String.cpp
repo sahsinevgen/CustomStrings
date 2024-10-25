@@ -28,13 +28,56 @@ String::~String() {
     delete [] data;
 }
 
-size_t String::get_capacity() {
+size_t String::get_capacity() const {
     return capacity - 1;
 };
 
-size_t String::get_size() {
+size_t String::get_size() const {
     return size - 1;
 };
+
+bool operator==(const String s1, const String s2) {
+    if (s1.get_size() != s2.get_size()) {
+        return false;
+    }
+
+    for (int i = 0; i < s1.get_size(); i++) {
+        if (s1.data[i] != s2.data[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool operator!=(const String s1, const String s2) {
+    return !(s1 == s2);
+}
+
+bool operator<(const String s1, const String s2) {
+    int i = 0;
+
+    for (; i < s1.get_size() && i < s2.get_size(); i++) {
+        if (s1.data[i] == s2.data[i]) {
+            continue;
+        }
+        return s1.data[i] < s2.data[i];
+    }
+
+    return i != s2.get_size();
+}
+
+bool operator>(const String s1, const String s2) {
+    return s2 < s1;
+}
+
+bool operator<=(const String s1, const String s2) {
+    return !(s1 > s2);
+}
+
+bool operator>=(const String s1, const String s2) {
+    return !(s1 < s2);
+}
 
 size_t String::get_new_capacity(size_t size) {
     return size * 2;
