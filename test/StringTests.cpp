@@ -33,34 +33,53 @@ TEST(ConstructorTests, FromString) {
 }
 
 
-  TEST(CompareOperatorTests, Equality) {
-    EXPECT_TRUE(String("123") == String("123"));
-    EXPECT_FALSE(String("123") != String("123"));
+TEST(CompareOperatorTests, Equality) {
+  EXPECT_TRUE(String("123") == String("123"));
+  EXPECT_FALSE(String("123") != String("123"));
 
-    EXPECT_TRUE(String("") == String(""));
-    EXPECT_FALSE(String("") != String(""));
+  EXPECT_TRUE(String("") == String(""));
+  EXPECT_FALSE(String("") != String(""));
 
-    EXPECT_TRUE(String("123") != String(""));
-    EXPECT_FALSE(String("123") == String(""));
-  }
+  EXPECT_TRUE(String("123") != String(""));
+  EXPECT_FALSE(String("123") == String(""));
+}
 
-  TEST(CompareOperatorTests, Compare) {
-    EXPECT_TRUE(String("1") < String("12"));
-    EXPECT_TRUE(String("12") < String("2"));
+TEST(CompareOperatorTests, Compare) {
+  EXPECT_TRUE(String("1") < String("12"));
+  EXPECT_TRUE(String("12") < String("2"));
 
-    EXPECT_FALSE(String("1") > String("12"));
-    EXPECT_FALSE(String("12") > String("2"));
+  EXPECT_FALSE(String("1") > String("12"));
+  EXPECT_FALSE(String("12") > String("2"));
 
 
-    EXPECT_TRUE(String("1") <= String("12"));
-    EXPECT_TRUE(String("12") <= String("2"));
-    
-    EXPECT_FALSE(String("1") >= String("12"));
-    EXPECT_FALSE(String("12") >= String("2"));
+  EXPECT_TRUE(String("1") <= String("12"));
+  EXPECT_TRUE(String("12") <= String("2"));
+  
+  EXPECT_FALSE(String("1") >= String("12"));
+  EXPECT_FALSE(String("12") >= String("2"));
 
-    EXPECT_TRUE(String("") <= String(""));
-    EXPECT_TRUE(String("12") <= String("2"));
-  }
+  EXPECT_TRUE(String("") <= String(""));
+  EXPECT_TRUE(String("12") <= String("2"));
+}
+
+
+TEST(SquareBracketsTests, Const) {
+  const String const_str("qwe123");
+  String str("qwe123");
+
+  EXPECT_EQ(const_str[0], 'q');
+  EXPECT_EQ(str[0], 'q');
+
+  EXPECT_NE(const_str[1], '_');
+  EXPECT_NE(str[1], '_');
+}
+
+TEST(SquareBracketsTests, NonConst) {
+  String str("qwe123");
+
+  str[0] = 'a';
+  EXPECT_EQ(str, String("awe123"));
+}
 
 }
 

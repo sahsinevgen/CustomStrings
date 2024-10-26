@@ -42,7 +42,7 @@ bool operator==(const String s1, const String s2) {
     }
 
     for (int i = 0; i < s1.get_size(); i++) {
-        if (s1.data[i] != s2.data[i]) {
+        if (s1[i] != s2[i]) {
             return false;
         }
     }
@@ -58,10 +58,10 @@ bool operator<(const String s1, const String s2) {
     int i = 0;
 
     for (; i < s1.get_size() && i < s2.get_size(); i++) {
-        if (s1.data[i] == s2.data[i]) {
+        if (s1[i] == s2[i]) {
             continue;
         }
-        return s1.data[i] < s2.data[i];
+        return s1[i] < s2[i];
     }
 
     return i != s2.get_size();
@@ -78,6 +78,15 @@ bool operator<=(const String s1, const String s2) {
 bool operator>=(const String s1, const String s2) {
     return !(s1 < s2);
 }
+
+char String::operator[](int i) const {
+    return data[i];
+}
+
+char& String::operator[](int i) {
+    return data[i];
+}
+
 
 size_t String::get_new_capacity(size_t size) {
     return size * 2;

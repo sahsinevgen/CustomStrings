@@ -22,6 +22,9 @@ public:
     friend bool operator>(const String s1, const String s2);
     friend bool operator<=(const String s1, const String s2);
     friend bool operator>=(const String s1, const String s2);
+
+    char operator[](int i) const;
+    char& operator[](int i);
 private:
     static size_t get_new_capacity(size_t size);
     size_t capacity;
