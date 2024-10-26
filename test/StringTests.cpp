@@ -148,4 +148,19 @@ TEST(PlusOperator, CStr) {
 }
 
 
+TEST(EqualOperator, String) {
+  String s = "a";
+
+  EXPECT_EQ(s = String("aba"), String("aba"));
+  EXPECT_EQ(s, String("aba"));
+}
+
+TEST(EqualOperator, CStr) {
+  String s = "a";
+
+  // s = "aba";
+  EXPECT_EQ(s = "aba", String("aba"));
+  EXPECT_EQ(s, String("aba"));
+}
+
 }

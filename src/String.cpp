@@ -1,5 +1,6 @@
 #include"String.h"
 #include <string.h>
+#include <iostream>
 
 namespace custom_string {
 
@@ -44,7 +45,7 @@ size_t String::get_size() const {
     return size - 1;
 };
 
-bool operator==(const String s1, const String s2) {
+bool operator==(const String& s1, const String& s2) {
     if (s1.get_size() != s2.get_size()) {
         return false;
     }
@@ -58,11 +59,11 @@ bool operator==(const String s1, const String s2) {
     return true;
 }
 
-bool operator!=(const String s1, const String s2) {
+bool operator!=(const String& s1, const String& s2) {
     return !(s1 == s2);
 }
 
-bool operator<(const String s1, const String s2) {
+bool operator<(const String& s1, const String& s2) {
     int i = 0;
 
     for (; i < s1.get_size() && i < s2.get_size(); i++) {
@@ -75,15 +76,15 @@ bool operator<(const String s1, const String s2) {
     return i != s2.get_size();
 }
 
-bool operator>(const String s1, const String s2) {
+bool operator>(const String& s1, const String& s2) {
     return s2 < s1;
 }
 
-bool operator<=(const String s1, const String s2) {
+bool operator<=(const String& s1, const String& s2) {
     return !(s1 > s2);
 }
 
-bool operator>=(const String s1, const String s2) {
+bool operator>=(const String& s1, const String& s2) {
     return !(s1 < s2);
 }
 
@@ -112,7 +113,7 @@ String& String::operator+=(const char* c_str) {
     return *this;
 }
 
-String& String::operator+=(const String str) {
+String& String::operator+=(const String& str) {
     reserve(get_size() + str.get_size());
     memcpy(data + (size - 1), str.data, str.get_size());
     size += str.get_size();
@@ -120,35 +121,59 @@ String& String::operator+=(const String str) {
     return *this;
 }
 
-String operator+(const String s1, const String s2) {
+String operator+(const String& s1, const String& s2) {
     String ans = s1;
     ans += s2;
     return ans;
 }
 
-String operator+(const char c, const String s) {
+String operator+(const char c, const String& s) {
     return String(c) + s;
 }
 
-String operator+(const String s, const char c) {
+String operator+(const String& s, const char c) {
     return s + String(c);
 }
 
-String operator+(const char* s1, const String s2) {
+String operator+(const char* s1, const String& s2) {
     return String(s1) + s2;
 }
 
-String operator+(const String s1, const char* s2) {
+String operator+(const String& s1, const char* s2) {
     return s1 + String(s2);
 }
 
-void String::reserve(size_t new_size) {
+String& String::operator=(const String& str) {
+    reserve(str.get_size(), false);
+    memcpy(data, str.data, str.get_size());
+    data[str.get_size()] = '\0';
+    size = str.size;
+    return *this;
+}
+
+String& String::operator=(const char* c_str) {
+    size_t n = strlen(c_str);
+    reserve(n, false);
+    std::cout << data << std::endl;
+    std::cout << c_str << std::endl;
+    memcpy(data, c_str, n);
+    data[n] = '\0';
+
+    std::cout << data << std::endl;
+    std::cout << c_str << std::endl;
+    size = n + 1;
+    return *this;
+}
+
+void String::reserve(size_t new_size, bool need_copy) {
     new_size += 1;
 
     if (new_size > capacity) {
         capacity = get_new_capacity(new_size);
         char* new_data = new char[capacity];
-        memcpy(new_data, data, size);
+        if (need_copy) {
+            memcpy(new_data, data, size);
+        }
         delete[] data;
         data = new_data;
     }
