@@ -10,6 +10,14 @@ String::String() {
     data[0] = '\0';
 }
 
+String::String(const char c) {
+    size = 2;
+    capacity = 2;
+    data = new char[2];
+    data[0] = c;
+    data[1] = '\0';
+}
+
 String::String(const char* str) {
     size = strlen(str) + 1;
     capacity = get_new_capacity(size);
@@ -110,6 +118,28 @@ String& String::operator+=(const String str) {
     size += str.get_size();
     data[get_size()] = '\0';
     return *this;
+}
+
+String operator+(const String s1, const String s2) {
+    String ans = s1;
+    ans += s2;
+    return ans;
+}
+
+String operator+(const char c, const String s) {
+    return String(c) + s;
+}
+
+String operator+(const String s, const char c) {
+    return s + String(c);
+}
+
+String operator+(const char* s1, const String s2) {
+    return String(s1) + s2;
+}
+
+String operator+(const String s1, const char* s2) {
+    return s1 + String(s2);
 }
 
 void String::reserve(size_t new_size) {

@@ -15,6 +15,14 @@ TEST(ConstructorTests, EmptyString) {
 }
 
 
+TEST(ConstructorTests, FromChar) {
+  String s('a');
+  EXPECT_TRUE(strcmp(s.data, "a\0") == 0);
+  EXPECT_EQ(s.get_size(), 1);
+  EXPECT_EQ(s.get_capacity(), 1);
+}
+
+
 TEST(ConstructorTests, FromCStr) {
   char c_str[]="Hello, world";
   String s(c_str);
@@ -81,6 +89,7 @@ TEST(SquareBracketsTests, NonConst) {
   EXPECT_EQ(str, String("awe123"));
 }
 
+
 TEST(PlusEqualOperator, Char) {
   String str;
 
@@ -117,5 +126,26 @@ TEST(PlusEqualOperator, String) {
   EXPECT_EQ(str, String("aaabacad"));
 }
 
+
+TEST(PlusOperator, Char) {
+  EXPECT_EQ(String("aa") + 'b', String("aab"));
+  EXPECT_EQ('a' + String("bb"), String("abb"));
 }
 
+TEST(PlusOperator, String) {
+  EXPECT_EQ(String("aa") + String("bb"), String("aabb"));
+  EXPECT_EQ(String("") + String("bb"), String("bb"));
+  EXPECT_EQ(String("aa") + String(""), String("aa"));
+  EXPECT_EQ(String("") + String(""), String(""));
+}
+
+TEST(PlusOperator, CStr) {
+  EXPECT_EQ(String("aa") + "bb", String("aabb"));
+  EXPECT_EQ("aa" + String("bb"), String("aabb"));
+
+  EXPECT_EQ(String("aa") + "", String("aa"));
+  EXPECT_EQ("" + String("aa"), String("aa"));
+}
+
+
+}
