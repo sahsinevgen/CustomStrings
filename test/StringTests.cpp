@@ -81,5 +81,41 @@ TEST(SquareBracketsTests, NonConst) {
   EXPECT_EQ(str, String("awe123"));
 }
 
+TEST(PlusEqualOperator, Char) {
+  String str;
+
+  str += 'a';
+  EXPECT_EQ(str, String("a"));
+
+  EXPECT_EQ(str += 'b', String("ab"));
+
+  (str += 'c') += 'd';
+  EXPECT_EQ(str, String("abcd"));
+}
+
+TEST(PlusEqualOperator, CStr) {
+  String str;
+
+  str += "aa";
+  EXPECT_EQ(str, String("aa"));
+
+  EXPECT_EQ(str += "ab", String("aaab"));
+
+  (str += "ac") += "ad";
+  EXPECT_EQ(str, String("aaabacad"));
+}
+
+TEST(PlusEqualOperator, String) {
+  String str;
+
+  str += String("aa");
+  EXPECT_EQ(str, String("aa"));
+
+  EXPECT_EQ(str += String("ab"), String("aaab"));
+
+  (str += String("ac")) += String("ad");
+  EXPECT_EQ(str, String("aaabacad"));
+}
+
 }
 

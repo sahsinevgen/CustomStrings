@@ -25,7 +25,12 @@ public:
 
     char operator[](int i) const;
     char& operator[](int i);
+
+    String& operator+=(const char c);
+    String& operator+=(const char* c_str);
+    String& operator+=(const String str);
 private:
+    void reserve(size_t new_size);
     static size_t get_new_capacity(size_t size);
     size_t capacity;
     size_t size;
