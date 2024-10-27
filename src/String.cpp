@@ -1,6 +1,5 @@
 #include"String.h"
 #include <string.h>
-#include <iostream>
 
 namespace custom_string {
 
@@ -169,13 +168,8 @@ String& String::operator=(String&& str) {
 String& String::operator=(const char* c_str) {
     size_t n = strlen(c_str);
     reserve(n, false);
-    std::cout << data << std::endl;
-    std::cout << c_str << std::endl;
     memcpy(data, c_str, n);
     data[n] = '\0';
-
-    std::cout << data << std::endl;
-    std::cout << c_str << std::endl;
     size = n + 1;
     return *this;
 }
