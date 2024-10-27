@@ -6,3 +6,6 @@ set(SUBDIRECTORIES src test)
 foreach(SUBDIR ${SUBDIRECTORIES})
 	add_subdirectory(${SUBDIR})
 endforeach()
+
+add_executable(main main.cpp)
+target_link_libraries(main String)

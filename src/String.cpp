@@ -33,8 +33,15 @@ String::String(const String& str) {
     memcpy(data, str.data, size);
 }
 
+String::String(String&& str) {
+    size = str.size;
+    capacity = str.capacity;
+    data = str.data;
+    str.make_consumed();
+}
+
 String::~String() {
-    delete [] data;
+    free_data_if_not_consumed();
 }
 
 size_t String::get_capacity() const {
@@ -151,6 +158,14 @@ String& String::operator=(const String& str) {
     return *this;
 }
 
+String& String::operator=(String&& str) {
+    size = str.size;
+    capacity = str.capacity;
+    data = str.data;
+    str.make_consumed();
+    return *this;
+}
+
 String& String::operator=(const char* c_str) {
     size_t n = strlen(c_str);
     reserve(n, false);
@@ -174,13 +189,28 @@ void String::reserve(size_t new_size, bool need_copy) {
         if (need_copy) {
             memcpy(new_data, data, size);
         }
-        delete[] data;
+        free_data_if_not_consumed();
         data = new_data;
     }
 }
 
+void String::free_data_if_not_consumed() {
+    if (!is_consumed()) {
+        delete[] data;
+    }
+}
+
+void String::make_consumed() {
+    size = capacity = 0;
+    data = nullptr;
+}
+
 size_t String::get_new_capacity(size_t size) {
     return size * 2;
+}
+
+bool String::is_consumed() const {
+    return capacity == 0;
 }
 
 }  // ns custom_string

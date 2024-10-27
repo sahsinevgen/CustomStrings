@@ -163,4 +163,31 @@ TEST(EqualOperator, CStr) {
   EXPECT_EQ(s, String("aba"));
 }
 
+//  Idn, how to test move semantics
+//  Because i don't want to add flag that String was moved (consumed)
+//  Now i just assume that size and capacity of moved string is 0
+TEST(MoveSemantics, Constructor) {
+  String str = "abc";
+  EXPECT_FALSE(str.is_consumed());
+
+  String copied = str;
+  String moved = std::move(str);
+
+  EXPECT_EQ(copied, moved);
+  EXPECT_TRUE(str.is_consumed());
+}
+
+TEST(MoveSemantics, EqualOperator) {
+  String str = "abc";
+  EXPECT_FALSE(str.is_consumed());
+
+  String copied;
+  copied = str;
+  String moved;
+  moved = std::move(str);
+
+  EXPECT_EQ(copied, moved);
+  EXPECT_TRUE(str.is_consumed());
+}
+
 }

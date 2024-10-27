@@ -12,6 +12,7 @@ public:
     String(const char str);
     String(const char* str);
     String(const String& str);
+    String(String&& str);
     ~String();
 
     size_t get_capacity() const;
@@ -38,10 +39,15 @@ public:
     friend String operator+(const String& s1, const char* s2);
 
     String& operator=(const String& str);
+    String& operator=(String&& str);
     String& operator=(const char* c_str);
+
+    bool is_consumed() const;
 private:
     void reserve(size_t new_size, bool need_copy = true);
     static size_t get_new_capacity(size_t size);
+    void free_data_if_not_consumed();
+    void make_consumed();
 
     size_t capacity;
     size_t size;
