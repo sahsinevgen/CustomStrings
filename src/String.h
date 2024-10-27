@@ -44,7 +44,6 @@ public:
 
     bool is_consumed() const;
 
-    //  ptr can 
     const char* get_data() const;
 private:
     void reserve(size_t new_size, bool need_copy = true);
