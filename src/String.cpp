@@ -174,6 +174,10 @@ String& String::operator=(const char* c_str) {
     return *this;
 }
 
+const char* String::get_data() const {
+    return data;
+}
+
 void String::reserve(size_t new_size, bool need_copy) {
     new_size += 1;
 

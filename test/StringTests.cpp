@@ -190,4 +190,11 @@ TEST(MoveSemantics, EqualOperator) {
   EXPECT_TRUE(str.is_consumed());
 }
 
+
+TEST(GetData, _) {
+  String str = "aba";
+  EXPECT_EQ(str, String(str.get_data()));
+}
+
+
 }
